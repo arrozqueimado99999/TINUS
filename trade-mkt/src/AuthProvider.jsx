@@ -15,12 +15,20 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = authListener(async user => {
       setUser(user)
+
       if (user) {
-        const perfilData = await getUserProfile(user.uid)
-        setPerfil(perfilData)
+        const perfilData = await getUserProfile(user.uid, user.email)
+        setPerfil(
+          perfilData || {
+            nome: user.displayName || user.email?.split('@')[0] || 'Usuário',
+            email: user.email,
+            cargo: 'colaborador',
+          }
+        )
       } else {
         setPerfil(null)
       }
+
       setLoading(false)
     })
     return unsubscribe

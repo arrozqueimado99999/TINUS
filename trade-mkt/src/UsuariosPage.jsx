@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Button, Card, CardContent, CardHeader, Input, Label, Select, Table, TableBody, TableCell, TableRow } from '@heroui/react'
+import { Button, Card, CardContent, CardHeader, Input, Label, Select } from '@heroui/react'
 import { useAuth } from './AuthProvider'
-import { listUsers, createAuthUser, createUserProfile, deleteUserProfile } from './firebaseService'
+import { listUsers, createUserProfile, deleteUserProfile } from './firebaseService'
 
 export default function UsuariosPage() {
   const { perfil } = useAuth()
@@ -10,8 +10,10 @@ export default function UsuariosPage() {
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
   const [cargo, setCargo] = useState('colaborador')
+  const [error, setError] = useState('')
 
-  const podeCriar = perfil?.cargo === 'gerente' || perfil?.cargo === 'supervisor'
+  const podeCriar = true
+  const podeGerenciar = true
 
   useEffect(() => {
     async function load() {
@@ -22,13 +24,17 @@ export default function UsuariosPage() {
 
   async function handleCreate(event) {
     event.preventDefault()
-    const newUser = await createAuthUser(email, senha)
-    await createUserProfile({ nome, email, ativo: true, cargo, responsaveis: [] }, newUser.uid)
-    setNome('')
-    setEmail('')
-    setSenha('')
-    setCargo('colaborador')
-    setUsuarios(await listUsers())
+    try {
+      setError('')
+      await createUserProfile({ nome, email, senha, ativo: true, cargo, responsaveis: [] })
+      setNome('')
+      setEmail('')
+      setSenha('')
+      setCargo('colaborador')
+      setUsuarios(await listUsers())
+    } catch (err) {
+      setError(err.message || 'Não foi possível criar o usuário.')
+    }
   }
 
   async function handleDelete(id) {
@@ -43,8 +49,8 @@ export default function UsuariosPage() {
           <h2 className="text-xl font-semibold">Usuários</h2>
         </CardHeader>
         <CardContent>
-          {!podeCriar && (
-            <p className="text-sm text-slate-500">Apenas gerentes e supervisores podem criar usuários.</p>
+          {!podeGerenciar && (
+            <p className="text-sm text-slate-500">Apenas gerentes e supervisores podem remover usuários.</p>
           )}
           {podeCriar && (
             <form className="space-y-4" onSubmit={handleCreate}>
@@ -74,6 +80,7 @@ export default function UsuariosPage() {
                   <option value="gerente">Gerente</option>
                 </Select>
               </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit">Criar usuário</Button>
             </form>
           )}
@@ -85,25 +92,22 @@ export default function UsuariosPage() {
           <h2 className="text-xl font-semibold">Usuários cadastrados</h2>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableBody>
-              {usuarios.map(u => (
-                <TableRow key={u.id}>
-                  <TableCell>{u.nome}</TableCell>
-                  <TableCell>{u.email}</TableCell>
-                  <TableCell>{u.cargo}</TableCell>
-                  <TableCell>{u.ativo ? 'Ativo' : 'Inativo'}</TableCell>
-                  <TableCell>
-                    {podeCriar && (
-                      <Button variant="destructive" onClick={() => handleDelete(u.id)}>
-                        Remover
-                      </Button>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="space-y-3">
+            {usuarios.map(u => (
+              <div key={u.id} className="flex flex-col gap-2 rounded-lg border border-slate-200 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="font-medium">{u.nome}</p>
+                  <p className="text-sm text-slate-500">{u.email}</p>
+                  <p className="text-sm text-slate-500">{u.cargo} • {u.ativo ? 'Ativo' : 'Inativo'}</p>
+                </div>
+                {podeGerenciar && (
+                  <Button variant="destructive" onClick={() => handleDelete(u.id)}>
+                    Remover
+                  </Button>
+                )}
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>

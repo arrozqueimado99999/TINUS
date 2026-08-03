@@ -55,10 +55,27 @@ export async function createAuthUser(email, password) {
   return userCredential.user
 }
 
-export async function getUserProfile(uid) {
-  const ref = doc(db, 'usuarios', uid)
-  const snapshot = await getDoc(ref)
-  return snapshot.exists() ? { id: snapshot.id, ...snapshot.data() } : null
+export async function getUserProfile(uid, email = null) {
+  if (uid) {
+    const ref = doc(db, 'usuarios', uid)
+    const snapshot = await getDoc(ref)
+    if (snapshot.exists()) {
+      return { id: snapshot.id, ...snapshot.data() }
+    }
+  }
+
+  if (email) {
+    const normalizedEmail = email.trim().toLowerCase()
+    const q = query(collection(db, 'usuarios'), where('email', '==', normalizedEmail))
+    const snapshot = await getDocs(q)
+
+    if (!snapshot.empty) {
+      const firstUser = snapshot.docs[0]
+      return { id: firstUser.id, ...firstUser.data() }
+    }
+  }
+
+  return null
 }
 
 export async function listUsers() {
@@ -67,16 +84,33 @@ export async function listUsers() {
 }
 
 export async function createUserProfile(data, uid) {
+  const email = data.email?.trim().toLowerCase()
+  const senha = data.senha ?? data.password
+  let authUid = uid || null
+
+  if (!authUid && email && senha) {
+    try {
+      const createdUser = await createAuthUser(email, senha)
+      authUid = createdUser.uid
+    } catch (error) {
+      if (error?.code === 'auth/email-already-in-use') {
+        throw new Error('Este e-mail já está em uso.')
+      }
+      throw error
+    }
+  }
+
   const perfil = {
     ...data,
+    email,
     criadoPor: auth.currentUser?.uid || null,
     criadoEm: serverTimestamp(),
   }
 
-  if (uid) {
-    const ref = doc(db, 'usuarios', uid)
-    await setDoc(ref, perfil)
-    return uid
+  if (authUid) {
+    const ref = doc(db, 'usuarios', authUid)
+    await setDoc(ref, perfil, { merge: true })
+    return authUid
   }
 
   const ref = await addDoc(collection(db, 'usuarios'), perfil)

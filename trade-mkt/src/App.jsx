@@ -22,7 +22,7 @@ function AuthenticatedApp() {
   return (
     <>
       <Navigation />
-      <main>
+      <main className="min-h-screen pb-24 sm:pb-6 md:ml-64">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/demandas" element={<DemandasPage />} />
