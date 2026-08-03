@@ -21,12 +21,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 p-4">
-      <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-xl">
-        <h1 className="text-2xl font-bold text-slate-800">Entrar</h1>
+    <div className="min-h-screen flex items-center justify-center p-4 border-slate-200  text-slate-700 backdrop-blur-sm">
+      <section className="w-full max-w-md text text-gray-600 rounded-2xl border border-slate-200 bg-gray-100/60 p-6">
+        <h1 className="text-2xl font-bold">Entrar</h1>
         <div className="mt-4">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
+            <div className="flex flex-col gap-1">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -36,7 +36,7 @@ export default function LoginPage() {
                 required
               />
             </div>
-            <div>
+            <div className="flex flex-col gap-1">
               <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
@@ -47,9 +47,11 @@ export default function LoginPage() {
               />
             </div>
             {error && <p className="text-sm text-red-500">{error}</p>}
-            <Button type="submit" variant="solid" className="w-full">
-              Entrar
-            </Button>
+            <div className="flex justify-end">
+              <Button type="submit" variant="primary">
+                Entrar
+              </Button>
+            </div>
           </form>
         </div>
       </section>
