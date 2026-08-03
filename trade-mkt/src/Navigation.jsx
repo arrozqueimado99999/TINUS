@@ -24,6 +24,10 @@ export default function Navigation() {
   const location = useLocation()
   const currentPage = pageMeta[location.pathname] || pageMeta['/']
 
+  const cargo = (perfil?.cargo || '').toString().trim().toLowerCase()
+  const podeGerenciarUsuarios = cargo === 'gerente' || cargo === 'supervisor'
+  const visibleLinks = links.filter(link => link.to !== '/usuarios' || podeGerenciarUsuarios)
+
   return (
     <>
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-slate-200 bg-gray-100/90 px-4 py-6 backdrop-blur-sm md:flex">
@@ -33,7 +37,7 @@ export default function Navigation() {
         </div>
 
         <nav className="flex flex-1 flex-col gap-1">
-          {links.map(link => {
+          {visibleLinks.map(link => {
             const Icon = link.icon
             const isActive = location.pathname === link.to
 
@@ -76,7 +80,13 @@ export default function Navigation() {
             </span>
 
             <Menu as="div" className="relative">
-              <MenuButton as={Button} isIconOnly variant="flat" className="rounded-full bg-slate-200 text-slate-700">
+              <MenuButton
+                as={Button}
+                isIconOnly
+                variant="flat"
+                aria-label="Abrir menu do usuário"
+                className="rounded-full bg-slate-200 text-slate-700"
+              >
                 <MenuIcon size={18} />
               </MenuButton>
 
@@ -109,7 +119,7 @@ export default function Navigation() {
 
       <nav className="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-200 bg-gray-100/30 px-2 py-2 backdrop-blur-sm sm:hidden">
         <div className="mx-auto flex max-w-md items-center justify-around gap-1">
-          {links.map(link => {
+          {visibleLinks.map(link => {
             const Icon = link.icon
             const isActive = location.pathname === link.to
 

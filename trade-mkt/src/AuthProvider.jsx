@@ -7,6 +7,10 @@ const AuthContext = createContext({
   loading: true,
 })
 
+function normalizeCargo(value) {
+  return String(value ?? '').trim().toLowerCase()
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [perfil, setPerfil] = useState(null)
@@ -19,11 +23,16 @@ export function AuthProvider({ children }) {
       if (user) {
         const perfilData = await getUserProfile(user.uid, user.email)
         setPerfil(
-          perfilData || {
-            nome: user.displayName || user.email?.split('@')[0] || 'Usuário',
-            email: user.email,
-            cargo: 'colaborador',
-          }
+          perfilData
+            ? {
+                ...perfilData,
+                cargo: normalizeCargo(perfilData.cargo || 'colaborador'),
+              }
+            : {
+                nome: user.displayName || user.email?.split('@')[0] || 'Usuário',
+                email: user.email,
+                cargo: normalizeCargo('colaborador'),
+              }
         )
       } else {
         setPerfil(null)

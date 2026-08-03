@@ -18,6 +18,19 @@ function ProtectedRoute({ children }) {
   return user ? children : <Navigate to="/login" replace />
 }
 
+function RoleProtectedRoute({ children }) {
+  const { perfil, loading } = useAuth()
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Carregando...</div>
+  }
+
+  const cargo = (perfil?.cargo || '').toString().trim().toLowerCase()
+  const podeGerenciarUsuarios = cargo === 'gerente' || cargo === 'supervisor'
+
+  return podeGerenciarUsuarios ? children : <Navigate to="/" replace />
+}
+
 function AuthenticatedApp() {
   return (
     <>
@@ -27,7 +40,14 @@ function AuthenticatedApp() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/demandas" element={<DemandasPage />} />
           <Route path="/grupos" element={<GruposPage />} />
-          <Route path="/usuarios" element={<UsuariosPage />} />
+          <Route
+            path="/usuarios"
+            element={
+              <RoleProtectedRoute>
+                <UsuariosPage />
+              </RoleProtectedRoute>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
@@ -53,7 +73,7 @@ function AppRoutes() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>

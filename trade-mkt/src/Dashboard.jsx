@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Card, CardContent, CardHeader } from '@heroui/react'
 import { listDemandas, listGrupos, listUsers } from './firebaseService'
 
 export default function Dashboard() {
@@ -19,40 +18,24 @@ export default function Dashboard() {
   return (
     <div className="space-y-6 p-6">
       <div className="grid gap-6 lg:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <h2 className="text-xl font-semibold">Demandas</h2>
-          </CardHeader>
-          <CardContent>
-            <p>{demandas.length} demandas cadastradas</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <h2 className="text-xl font-semibold">Grupos</h2>
-          </CardHeader>
-          <CardContent>
-            <p>{grupos.length} grupos cadastrados</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <h2 className="text-xl font-semibold">Usuários</h2>
-          </CardHeader>
-          <CardContent>
-            <p>{usuarios.length} usuários ativos</p>
-          </CardContent>
-        </Card>
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="text-xl font-semibold text-slate-800">Demandas</h2>
+          <p className="mt-2 text-slate-600">{demandas.length} demandas cadastradas</p>
+        </section>
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="text-xl font-semibold text-slate-800">Grupos</h2>
+          <p className="mt-2 text-slate-600">{grupos.length} grupos cadastrados</p>
+        </section>
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <h2 className="text-xl font-semibold text-slate-800">Usuários</h2>
+          <p className="mt-2 text-slate-600">{usuarios.length} usuários ativos</p>
+        </section>
       </div>
 
-      <Card>
-        <CardHeader>
-          <h2 className="text-xl font-semibold">Demandas recentes</h2>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-slate-500">As últimas demandas aparecem aqui conforme forem cadastradas.</p>
-        </CardContent>
-      </Card>
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-slate-800">Demandas recentes</h2>
+        <p className="mt-2 text-sm text-slate-500">As últimas demandas aparecem aqui conforme forem cadastradas.</p>
+      </section>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Card, CardContent, CardHeader, Input, Label } from '@heroui/react'
+import { Button, Input, Label } from '@heroui/react'
 import { signIn } from './firebaseService'
 
 export default function LoginPage() {
@@ -22,11 +22,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-950 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <h1 className="text-2xl font-bold">Entrar</h1>
-        </CardHeader>
-        <CardContent>
+      <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-xl">
+        <h1 className="text-2xl font-bold text-slate-800">Entrar</h1>
+        <div className="mt-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <Label htmlFor="email">Email</Label>
@@ -53,8 +51,8 @@ export default function LoginPage() {
               Entrar
             </Button>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
     </div>
   )
 }

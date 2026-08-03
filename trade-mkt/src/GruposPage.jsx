@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Card, CardContent, CardHeader, Input, Label, Table, TableBody, TableCell, TableRow } from '@heroui/react'
+import { Button, Input, Label } from '@heroui/react'
 import { useAuth } from './AuthProvider'
 import { listGrupos, createGrupo, deleteGrupo } from './firebaseService'
 
@@ -8,7 +8,8 @@ export default function GruposPage() {
   const [grupos, setGrupos] = useState([])
   const [nome, setNome] = useState('')
 
-  const podeEditar = perfil?.cargo === 'gerente' || perfil?.cargo === 'supervisor'
+  const cargo = (perfil?.cargo || '').toString().trim().toLowerCase()
+  const podeEditar = cargo === 'gerente' || cargo === 'supervisor'
 
   useEffect(() => {
     async function load() {
@@ -31,11 +32,9 @@ export default function GruposPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <Card>
-        <CardHeader>
-          <h2 className="text-xl font-semibold">Grupos</h2>
-        </CardHeader>
-        <CardContent>
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-slate-800">Grupos</h2>
+        <div className="mt-4">
           {!podeEditar && (
             <p className="text-sm text-slate-500">Apenas gerentes e supervisores podem criar ou remover grupos.</p>
           )}
@@ -48,32 +47,42 @@ export default function GruposPage() {
               <Button type="submit">Criar grupo</Button>
             </form>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <h2 className="text-xl font-semibold">Grupos cadastrados</h2>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableBody>
-              {grupos.map(g => (
-                <TableRow key={g.id}>
-                  <TableCell>{g.nome}</TableCell>
-                  <TableCell>
-                    {podeEditar && (
-                      <Button variant="destructive" onClick={() => handleDelete(g.id)}>
-                        Excluir
-                      </Button>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-slate-800">Grupos cadastrados</h2>
+        <div className="mt-4">
+          {grupos.length === 0 ? (
+            <p className="text-sm text-slate-500">Ainda não há grupos cadastrados.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-slate-200 text-sm">
+                <thead>
+                  <tr className="text-left text-slate-500">
+                    <th className="px-3 py-2 font-medium">Nome</th>
+                    <th className="px-3 py-2 font-medium">Ações</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {grupos.map(g => (
+                    <tr key={g.id}>
+                      <td className="px-3 py-2">{g.nome}</td>
+                      <td className="px-3 py-2">
+                        {podeEditar && (
+                          <Button variant="destructive" onClick={() => handleDelete(g.id)}>
+                            Excluir
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </section>
     </div>
   )
 }
