@@ -68,32 +68,50 @@ export default function Dashboard() {
   }, [])
 
   // Stat computations
+  // Stat computations
   const totalDemandas = demandas.length
-  const concluidasCount = demandas.filter(d => (d.status || '').toLowerCase() === 'concluída' || (d.status || '').toLowerCase() === 'concluida').length
-  const emAndamentoCount = demandas.filter(d => (d.status || '').toLowerCase() === 'em andamento').length
-  const pendentesCount = demandas.filter(d => !d.status || (d.status || '').toLowerCase() === 'pendente').length
-  const urgentesCount = demandas.filter(d => (d.prioridade || '').toLowerCase() === 'urgente' || (d.prioridade || '').toLowerCase() === 'alta').length
+  const concluidasCount = demandas.filter(d => {
+    const s = String(d.status || '').toLowerCase()
+    return s === 'concluída' || s === 'concluida'
+  }).length
+  const emAndamentoCount = demandas.filter(d => String(d.status || '').toLowerCase() === 'em andamento').length
+  const pendentesCount = demandas.filter(d => {
+    const s = String(d.status || '').toLowerCase()
+    return !d.status || s === 'pendente'
+  }).length
+  const urgentesCount = demandas.filter(d => {
+    const p = String(d.prioridade || '').toLowerCase()
+    return p === 'urgente' || p === 'alta'
+  }).length
 
   const completionRate = totalDemandas > 0 ? Math.round((concluidasCount / totalDemandas) * 100) : 0
 
   // Filtered demands list
   const filteredDemandas = useMemo(() => {
     return demandas.filter(d => {
+      const termo = search.toLowerCase()
+
       const matchesSearch =
-        d.titulo?.toLowerCase().includes(search.toLowerCase()) ||
-        d.descricao?.toLowerCase().includes(search.toLowerCase()) ||
+        d.titulo?.toLowerCase().includes(termo) ||
+        d.descricao?.toLowerCase().includes(termo) ||
         (Array.isArray(d.responsaveis) &&
           d.responsaveis.some(r =>
             typeof r === 'string'
-              ? r.toLowerCase().includes(search.toLowerCase())
-              : r.nome?.toLowerCase().includes(search.toLowerCase())
+              ? r.toLowerCase().includes(termo)
+              : r.nome?.toLowerCase().includes(termo)
           ))
 
-      const statusLower = (d.status || 'pendente').toLowerCase()
+      const statusStr = String(d.status || 'pendente').toLowerCase()
+
       let matchesStatus = true
-      if (statusFilter === 'pendentes') matchesStatus = statusLower === 'pendente'
-      else if (statusFilter === 'em_andamento') matchesStatus = statusLower === 'em andamento'
-      else if (statusFilter === 'concluidas') matchesStatus = statusLower === 'concluída' || statusLower === 'concluida'
+
+      if (statusFilter === 'pendentes') {
+        matchesStatus = !d.status || statusStr === 'pendente'
+      } else if (statusFilter === 'em_andamento') {
+        matchesStatus = statusStr === 'em andamento'
+      } else if (statusFilter === 'concluidas') {
+        matchesStatus = statusStr === 'concluída' || statusStr === 'concluida'
+      }
 
       return matchesSearch && matchesStatus
     })
@@ -354,22 +372,24 @@ export default function Dashboard() {
                 </div>
               ) : (
                 filteredDemandas.slice(0, 8).map(demanda => {
-                  const currentStatus = demanda.status || 'Pendente'
-                  const prioridade = demanda.prioridade || 'Média'
+                  const currentStatus = String(demanda.status || 'Pendente')
+                  const prioridade = String(demanda.prioridade || 'Média')
 
                   let statusBadgeClass = 'bg-slate-800 text-slate-300 border-slate-700'
-                  if (currentStatus.toLowerCase() === 'concluída' || currentStatus.toLowerCase() === 'concluida') {
+                  const statusLower = currentStatus.toLowerCase()
+                  if (statusLower === 'concluída' || statusLower === 'concluida') {
                     statusBadgeClass = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                  } else if (currentStatus.toLowerCase() === 'em andamento') {
+                  } else if (statusLower === 'em andamento') {
                     statusBadgeClass = 'bg-amber-500/10 text-amber-400 border-amber-500/30'
-                  } else if (currentStatus.toLowerCase() === 'pendente') {
+                  } else if (statusLower === 'pendente') {
                     statusBadgeClass = 'bg-slate-800/90 text-slate-400 border-slate-700/80'
                   }
 
                   let priorityBadgeClass = 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                  if (prioridade.toLowerCase() === 'urgente') {
+                  const prioridadeLower = prioridade.toLowerCase()
+                  if (prioridadeLower === 'urgente') {
                     priorityBadgeClass = 'bg-rose-500/10 text-rose-400 border-rose-500/30'
-                  } else if (prioridade.toLowerCase() === 'alta') {
+                  } else if (prioridadeLower === 'alta') {
                     priorityBadgeClass = 'bg-orange-500/10 text-orange-400 border-orange-500/30'
                   }
 
