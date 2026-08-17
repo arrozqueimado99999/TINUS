@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Input, Label } from '@heroui/react'
+import { Button, Card, Input, Label, TextField } from '@heroui/react'
 import { signIn } from './firebaseService'
 
 export default function LoginPage() {
@@ -21,12 +21,14 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 border-slate-200  text-slate-700 backdrop-blur-sm">
-      <section className="w-full max-w-md text text-gray-600 rounded-2xl border border-slate-200 bg-gray-100/60 p-6">
-        <h1 className="text-2xl font-bold">Entrar</h1>
-        <div className="mt-4">
+    <div className="min-h-screen flex items-center justify-center p-4 text-slate-700 backdrop-blur-sm">
+      <Card className="w-full max-w-md p-6 bg-gray-100/60 border border-slate-200 rounded-2xl">
+        <Card.Header>
+          <Card.Title className="text-2xl font-bold">Entrar</Card.Title>
+        </Card.Header>
+        <Card.Content className="mt-4">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex flex-col gap-1">
+            <TextField className="flex flex-col gap-1">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -35,8 +37,8 @@ export default function LoginPage() {
                 onChange={e => setEmail(e.target.value)}
                 required
               />
-            </div>
-            <div className="flex flex-col gap-1">
+            </TextField>
+            <TextField className="flex flex-col gap-1">
               <Label htmlFor="password">Senha</Label>
               <Input
                 id="password"
@@ -45,16 +47,16 @@ export default function LoginPage() {
                 onChange={e => setPassword(e.target.value)}
                 required
               />
-            </div>
+            </TextField>
             {error && <p className="text-sm text-red-500">{error}</p>}
-            <div className="flex justify-end">
+            <div className="flex justify-end pt-2">
               <Button type="submit" variant="primary">
                 Entrar
               </Button>
             </div>
           </form>
-        </div>
-      </section>
+        </Card.Content>
+      </Card>
     </div>
   )
 }

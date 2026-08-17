@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Button, Input, Label } from '@heroui/react'
+import { Button, Card, Input, Label, TextField } from '@heroui/react'
 import { useAuth } from './AuthProvider'
 import { listGrupos, createGrupo, deleteGrupo } from './firebaseService'
 
@@ -32,27 +32,31 @@ export default function GruposPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="text-xl font-semibold text-slate-800">Grupos</h2>
-        <div className="mt-4">
+      <Card className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <Card.Header>
+          <Card.Title className="text-xl font-semibold text-slate-800">Grupos</Card.Title>
+        </Card.Header>
+        <Card.Content className="mt-4">
           {!podeEditar && (
             <p className="text-sm text-slate-500">Apenas gerentes e supervisores podem criar ou remover grupos.</p>
           )}
           {podeEditar && (
             <form className="space-y-4" onSubmit={handleCreate}>
-              <div>
+              <TextField>
                 <Label htmlFor="nome">Nome do grupo</Label>
                 <Input id="nome" value={nome} onChange={e => setNome(e.target.value)} required />
-              </div>
-              <Button type="submit">Criar grupo</Button>
+              </TextField>
+              <Button type="submit" variant="primary">Criar grupo</Button>
             </form>
           )}
-        </div>
-      </section>
+        </Card.Content>
+      </Card>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="text-xl font-semibold text-slate-800">Grupos cadastrados</h2>
-        <div className="mt-4">
+      <Card className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <Card.Header>
+          <Card.Title className="text-xl font-semibold text-slate-800">Grupos cadastrados</Card.Title>
+        </Card.Header>
+        <Card.Content className="mt-4">
           {grupos.length === 0 ? (
             <p className="text-sm text-slate-500">Ainda não há grupos cadastrados.</p>
           ) : (
@@ -70,7 +74,7 @@ export default function GruposPage() {
                       <td className="px-3 py-2">{g.nome}</td>
                       <td className="px-3 py-2">
                         {podeEditar && (
-                          <Button variant="destructive" onClick={() => handleDelete(g.id)}>
+                          <Button variant="danger" size="sm" onClick={() => handleDelete(g.id)}>
                             Excluir
                           </Button>
                         )}
@@ -81,8 +85,8 @@ export default function GruposPage() {
               </table>
             </div>
           )}
-        </div>
-      </section>
+        </Card.Content>
+      </Card>
     </div>
   )
 }

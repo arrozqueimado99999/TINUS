@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Button, Input, Label } from '@heroui/react'
-import { Plus, UserRoundPlus } from 'lucide-react'
+import { Button, Card, Input, Label, TextField } from '@heroui/react'
+import { UserRoundPlus } from 'lucide-react'
 import { useAuth } from './AuthProvider'
 import { listUsers, createUserProfile, deleteUserProfile } from './firebaseService'
 
@@ -55,7 +55,7 @@ export default function UsuariosPage() {
             )}
           </div>
           {podeCriar && (
-            <Button color="primary" onClick={() => setIsModalOpen(true)} className="flex items-center gap-2">
+            <Button variant="primary" onClick={() => setIsModalOpen(true)} className="flex items-center gap-2">
               <UserRoundPlus size={16} />
               <span>Criar usuário</span>
             </Button>
@@ -78,15 +78,15 @@ export default function UsuariosPage() {
             </div>
 
             <form className="space-y-4" onSubmit={handleCreate}>
-              <div>
+              <TextField>
                 <Label htmlFor="nome">Nome</Label>
                 <Input id="nome" value={nome} onChange={e => setNome(e.target.value)} required />
-              </div>
-              <div>
+              </TextField>
+              <TextField>
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-              </div>
-              <div>
+              </TextField>
+              <TextField>
                 <Label htmlFor="senha">Senha</Label>
                 <Input
                   id="senha"
@@ -95,8 +95,8 @@ export default function UsuariosPage() {
                   onChange={e => setSenha(e.target.value)}
                   required
                 />
-              </div>
-              <div>
+              </TextField>
+              <TextField>
                 <Label htmlFor="cargo">Cargo</Label>
                 <Input
                   id="cargo"
@@ -116,22 +116,24 @@ export default function UsuariosPage() {
                   <option value="Assistente Comercial" />
                   <option value="Operador de Campo" />
                 </datalist>
-              </div>
+              </TextField>
               {error && <p className="text-sm text-red-500">{error}</p>}
               <div className="flex justify-end gap-2 pt-2">
-                <Button type="button" variant="light" onClick={() => setIsModalOpen(false)}>
+                <Button type="button" variant="tertiary" onClick={() => setIsModalOpen(false)}>
                   Cancelar
                 </Button>
-                <Button type="submit">Criar usuário</Button>
+                <Button type="submit" variant="primary">Criar usuário</Button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="text-xl font-semibold text-slate-800">Usuários cadastrados</h2>
-        <div className="mt-4">
+      <Card className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <Card.Header>
+          <Card.Title className="text-xl font-semibold text-slate-800">Usuários cadastrados</Card.Title>
+        </Card.Header>
+        <Card.Content className="mt-4">
           <div className="space-y-3">
             {usuarios.map(u => (
               <div key={u.id} className="flex flex-col gap-2 rounded-lg border border-slate-200 p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -141,15 +143,15 @@ export default function UsuariosPage() {
                   <p className="text-sm text-slate-500">{u.cargo} • {u.ativo ? 'Ativo' : 'Inativo'}</p>
                 </div>
                 {podeGerenciar && (
-                  <Button variant="destructive" onClick={() => handleDelete(u.id)}>
+                  <Button variant="danger" size="sm" onClick={() => handleDelete(u.id)}>
                     Remover
                   </Button>
                 )}
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </Card.Content>
+      </Card>
     </div>
   )
 }
