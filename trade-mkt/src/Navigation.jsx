@@ -43,7 +43,7 @@ export default function Navigation() {
           <div>
             
             <h1 className="text-sm text-gray-600 font-bold">TINUS</h1>
-            <p className="text-[10px] text-slate-400">Trade Marketing | Realcionamento</p>
+            <p className="text-[10px] text-slate-400">Trade Marketing | Relacionamento</p>
           </div>
         </div>
       </header>
@@ -70,7 +70,7 @@ export default function Navigation() {
                 <Sparkles size={20} className="fill-slate-950" />
               </div>
               <div>
-                <span className="text-base font-bold tracking-wider text-white">TRADE MKT</span>
+                <span className="text-base font-bold tracking-wider text-white">TINUS</span>
                 <div className="flex items-center gap-1.5 text-[11px] text-amber-400 font-medium">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                   <span>Sistema Ativo</span>
