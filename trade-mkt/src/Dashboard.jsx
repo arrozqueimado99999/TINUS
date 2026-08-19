@@ -174,8 +174,8 @@ export default function Dashboard() {
         <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight">
-              Olá, <span className="text-[#1c1c1c]">{userName}</span> 👋
+            <h1 className="mt-3 text-2xl text-[#1c1c1c]/70 sm:text-3xl font-bold tracking-tight">
+              Olá, <span className="text-[#1c1c1c]/70">{userName}</span> 
             </h1>
             <p className="mt-1 text-sm text-slate-400 max-w-xl">
               Acompanhe o andamento das demandas operacionais, distribuição por status e produtividade da equipe.
@@ -190,21 +190,21 @@ export default function Dashboard() {
             >
               <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
             </button>
-            <button
+            {/*<button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition duration-200 active:scale-95"
+              className="flex items-center gap-2.5 rounded-2xl py-3 text-sm font-semibold text-slate-950 shadow-lg active:scale-95"
             >
               <Plus size={18} className="stroke-[2.5]" />
               <span>Nova Demanda</span>
-            </button>
+            </button>*/}
           </div>
         </div>
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
         {/* Card 1: Total Demandas */}
-        <div className="rounded-2xl border border-slate-800/80 bg-[#121319] p-5 shadow-lg transition hover:border-slate-700">
+        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-lg transition hover:border-slate-300">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium uppercase tracking-wider text-slate-400">Total Demandas</span>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
@@ -222,7 +222,7 @@ export default function Dashboard() {
         </div>
 
         {/* Card 2: Concluídas & Taxa */}
-        <div className="rounded-2xl border border-slate-800/80 bg-[#121319] p-5 shadow-lg transition hover:border-slate-700">
+        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-lg transition hover:border-slate-300">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium uppercase tracking-wider text-slate-400">Concluídas</span>
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -244,47 +244,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Card 3: Em Andamento */}
-        <div className="rounded-2xl border border-slate-800/80 bg-[#121319] p-5 shadow-lg transition hover:border-slate-700">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium uppercase tracking-wider text-slate-400">Em Andamento</span>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <Clock size={20} />
-            </div>
-          </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{emAndamentoCount}</span>
-            <span className="text-xs text-amber-400 font-medium">em execução</span>
-          </div>
-          <div className="mt-3 flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/60 pt-3">
-            <span>Acompanhamento ativo</span>
-            <span className="flex items-center gap-1 text-emerald-400">
-              <TrendingUp size={12} /> Ativo
-            </span>
-          </div>
-        </div>
-
-        {/* Card 4: Equipe & Grupos */}
-        <div className="rounded-2xl border border-slate-800/80 bg-[#121319] p-5 shadow-lg transition hover:border-slate-700">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium uppercase tracking-wider text-slate-400">Grupos & Equipe</span>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
-              <Users size={20} />
-            </div>
-          </div>
-          <div className="mt-4 flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-white">{usuarios.length}</span>
-            <span className="text-xs text-slate-400">colaboradores</span>
-          </div>
-          <div className="mt-3 flex items-center justify-between text-xs text-slate-400 border-t border-slate-800/60 pt-3">
-            <span>{grupos.length} grupos cadastrados</span>
-            <Link to="/grupos" className="text-purple-400 hover:underline flex items-center gap-0.5">
-              Ver <ArrowUpRight size={12} />
-            </Link>
-          </div>
-        </div>
-      </div>
-
+        
       {/* Main Content Area: Status Distribution + Demandas Table */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Left Column (2 cols): Demandas List & Filters */}
