@@ -37,7 +37,7 @@ function AuthenticatedApp() {
       <Navigation />
       <main className="flex-1 flex flex-col min-w-0 min-h-screen">
         {/* Top Bar for Desktop */}
-        <header className="hidden md:flex items-center justify-between px-8 py-4 backdrop-blur-md">
+        {/*<header className="hidden md:flex items-center justify-between px-8 py-4 backdrop-blur-md">
           <div>
             <h2 className="text-base font-bold text-white tracking-tight">Painel Operacional Trade Marketing</h2>
             <p className="text-xs text-slate-400">Gestão integrada de demandas, grupos e equipe</p>
@@ -48,7 +48,7 @@ function AuthenticatedApp() {
               {new Date().toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'long', year: 'numeric' })}
             </span>
           </div>
-        </header>
+        </header>*/}
 
         {/* Content Canvas */}
         <div className="flex-1 p-3 sm:p-6 lg:p-8 overflow-y-auto">
