@@ -8,7 +8,6 @@ import { Button } from '@heroui/react'
 const links = [
   { to: '/', label: 'Início', icon: Home },
   { to: '/demandas', label: 'Demandas', icon: ListTodo },
-  { to: '/grupos', label: 'Grupos', icon: UserRound },
   { to: '/usuarios', label: 'Usuários', icon: Users },
 ]
 
