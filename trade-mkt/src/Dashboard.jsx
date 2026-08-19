@@ -170,12 +170,12 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Banner Header */}
-      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 shadow-2xl">
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8">
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 h-64 w-64 rounded-full pointer-events-none" />
         <div className="relative z-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              Olá, <span className="text-[#2v2v2v]">{userName}</span> 👋
+            <h1 className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight">
+              Olá, <span className="text-[#1c1c1c]">{userName}</span> 👋
             </h1>
             <p className="mt-1 text-sm text-slate-400 max-w-xl">
               Acompanhe o andamento das demandas operacionais, distribuição por status e produtividade da equipe.
