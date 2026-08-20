@@ -5,6 +5,47 @@
     font-family: 'Barlow', sans-serif;
 }
 
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+:root {
+  --verdi: #C2DB65;
+  --verdi-hover: #b2c95e;
+  --marelo: #F2C744;
+  --marelo-hover: #475569;
+
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --danger: #dc2626;
+
+  --color-background: #F2F2F2;
+  --color-surface: #ffffff;
+
+  --texto: #262626;
+  --texto-sec: #727262;
+  --borda: #d4d6ce;
+}
+
+@theme {
+  --color-verdi: var(--verdi);
+  --color-verdi-hover: var(--verdi-hover);
+
+  --color-marelo: var(--marelo);
+  --color-marelo-hover: var(--marelo-hover);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+
+  --color-texto: var(--texto);
+  --color-texto-sec: var(--texto-sec);
+  --color-borda: var(--borda);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
