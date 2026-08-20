@@ -47,18 +47,6 @@ export default function Navigation() {
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </Button>
-<<<<<<< HEAD
-=======
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1c1c1c] font-bold text-[#575c53] shadow-md shadow-amber-500/10">
-            <Asterisk size={78} className="animate-slow-spin" />
-          </div>
-          <div>
-            
-            <h1 className="text-sm text-gray-600 font-bold">TINUS</h1>
-            <p className="text-[10px] text-slate-400">Trade Marketing | Relacionamento</p>
-          </div>
-        </div>
->>>>>>> 662c33d908a9bcb36f6c47cbc37a4dfdd2fda8cf
       </header>
 
       {/* Mobile Menu Backdrop */}
@@ -84,14 +72,7 @@ export default function Navigation() {
               </div>
               <div>
                 <span className="text-base font-bold tracking-wider text-white">TINUS</span>
-<<<<<<< HEAD
 
-=======
-                <div className="flex items-center gap-1.5 text-[11px] text-amber-400 font-medium">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>Sistema Ativo</span>
-                </div>
->>>>>>> 662c33d908a9bcb36f6c47cbc37a4dfdd2fda8cf
               </div>
             </div>
 
