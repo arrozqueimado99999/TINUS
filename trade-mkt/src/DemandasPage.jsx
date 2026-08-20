@@ -512,9 +512,14 @@ export default function DemandasPage() {
         </div>
       </div>
 
+<<<<<<< HEAD
       {/* DEMANDAS */}
       <div className="space-y-3 px-6">
 
+=======
+      {/* Demandas Cards Grid */}
+      <div className="space-y-3 scrollbar-none overflow-y-auto">
+>>>>>>> 662c33d908a9bcb36f6c47cbc37a4dfdd2fda8cf
         {loading ? (
 
           <div className="py-16 text-center text-slate-500 text-sm flex flex-col items-center gap-2">
@@ -566,12 +571,16 @@ export default function DemandasPage() {
                 <div className="space-y-2 min-w-0 flex-1">
 
                   <div className="flex items-center gap-2.5 flex-wrap">
+<<<<<<< HEAD
 
                     <p className="text-slate-800">
                       {demanda.titulo}
                     </p>
 
                     
+=======
+                    <p className="text-slate-600">{demanda.titulo}</p>
+>>>>>>> 662c33d908a9bcb36f6c47cbc37a4dfdd2fda8cf
                   </div>
 
                   {demanda.descricao && (
